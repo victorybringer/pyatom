@@ -197,8 +197,8 @@ class AXUIElement(object):
         """
         err = AXUIElementPerformAction(self.ref, action)
 
-        if err != kAXErrorSuccess:
-            _setError(err, 'Error performing requested action')
+        # if err != kAXErrorSuccess:
+        #     _setError(err, 'Error performing requested action')
 
     def _getAttribute(self, attr):
         """

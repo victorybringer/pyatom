@@ -65,15 +65,20 @@ class BaseAXUIElement(_a11y.AXUIElement):
         Get the top level element for the application with the specified
         bundle ID, such as com.vmware.fusion.
         """
-        ra = AppKit.NSRunningApplication
-        # return value (apps) is always an array. if there is a match it will
-        # have an item, otherwise it won't.
-        apps = ra.runningApplicationsWithBundleIdentifier_(bundleId)
-        if len(apps) == 0:
-            raise ValueError(('Specified bundle ID not found in '
-                              'running apps: %s' % bundleId))
-        pid = apps[0].processIdentifier()
-        return cls.getAppRefByPid(pid)
+        retry_times = 10
+        while retry_times >= 0:
+            ra = AppKit.NSRunningApplication
+            # return value (apps) is always an array. if there is a match it will
+            # have an item, otherwise it won't.
+            apps = ra.runningApplicationsWithBundleIdentifier_(bundleId)
+            if len(apps) == 0:
+                time.sleep(1)
+                retry_times-=1
+                print(('Specified bundle ID not found in '
+                                'running apps: %s' % bundleId))
+            else:
+                pid = apps[0].processIdentifier()
+                return cls.getAppRefByPid(pid)
 
     @classmethod
     def getAppRefByLocalizedName(cls, name):
@@ -151,18 +156,23 @@ class BaseAXUIElement(_a11y.AXUIElement):
         # NSWorkspaceLaunchAllowingClassicStartup does nothing on any
         # modern system that doesn't have the classic environment installed.
         # Encountered a bug when passing 0 for no options on 10.6 PyObjC.
-        ws = AppKit.NSWorkspace.sharedWorkspace()
-        # Sorry about the length of the following line
-        r = ws.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_(
-            bundleID,
-            AppKit.NSWorkspaceLaunchAllowingClassicStartup,
-            AppKit.NSAppleEventDescriptor.nullDescriptor(),
-            None)
-        # On 10.6, this returns a tuple - first element bool result, second is
-        # a number. Let's use the bool result.
-        if not r[0]:
-            raise RuntimeError('Error launching specified application.')
-
+        retry_times = 10
+        while retry_times >= 0:
+                ws = AppKit.NSWorkspace.sharedWorkspace()
+                # Sorry about the length of the following line
+                r = ws.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_(
+                    bundleID,
+                    AppKit.NSWorkspaceLaunchAllowingClassicStartup,
+                    AppKit.NSAppleEventDescriptor.nullDescriptor(),
+                    None)
+                # On 10.6, this returns a tuple - first element bool result, second is
+                # a number. Let's use the bool result.
+                if not r[0]:
+                    retry_times -=1
+                    time.sleep(1)
+                    print(f"Error during launch app, remaining retry time {retry_times}")
+                else:
+                    break
     @staticmethod
     def launchAppByBundlePath(bundlePath, arguments=None):
         """Launch app with a given bundle path.
