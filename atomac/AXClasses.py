@@ -33,7 +33,8 @@ from retrying import retry
 
 
 def retry_if_specific_error_message(exception):
-    print(exception.output.decode("utf-8").strip())
+
+  
     """Return True if we should retry (in this case when a specific error message is found), False otherwise"""
     return True
 
