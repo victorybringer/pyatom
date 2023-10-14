@@ -32,12 +32,6 @@ from retrying import retry
 
 
 
-def retry_if_specific_error_message(exception):
-
-  
-    """Return True if we should retry (in this case when a specific error message is found), False otherwise"""
-    return True
-
 
 
 
@@ -922,23 +916,23 @@ class NativeUIElement(BaseAXUIElement):
         """Set the specified attribute to the specified string."""
         return self._setString(attribute, string)
     
-    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
+    
     def findFirst(self, **kwargs):
         """Return the first object that matches the criteria."""
         return self._findFirst(**kwargs)
 
-    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
+    
     def findFirstR(self, **kwargs):
         """Search recursively for the first object that matches the
         criteria.
         """
         return self._findFirstR(**kwargs)
     
-    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
+    
     def findAll(self, **kwargs):
         """Return a list of all children that match the specified criteria."""
         return self._findAll(**kwargs)
-    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
+    
     def findAllR(self, **kwargs):
         """Return a list of all children (recursively) that match
         the specified criteria.
@@ -965,7 +959,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         return self._getApplication()
     
-    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
+    @retry(stop_max_attempt_number=10)
     def menuItem(self, *args):
         """Return the specified menu item.
 
@@ -984,7 +978,8 @@ class NativeUIElement(BaseAXUIElement):
         """
         menuitem = self._getApplication().AXMenuBar
         return self._menuItem(menuitem, *args)
-
+     
+    @retry(stop_max_attempt_number=10) 
     def popUpItem(self, *args):
         """Return the specified item in a pop up menu."""
         self.Press()
