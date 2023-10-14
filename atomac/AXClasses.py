@@ -985,6 +985,14 @@ class NativeUIElement(BaseAXUIElement):
         self.Press()
         time.sleep(.5)
         return self._menuItem(self, *args)
+    
+    @retry(stop_max_attempt_number=10) 
+    def popUpMenuItem(self, num):
+        """Return the specified item in a pop up menu."""
+        self.Press()
+        time.sleep(1)
+        menu = self.findFirst(AXRole = "AXMenu")
+        return menu.findAll(AXRole = "AXMenuItem")[num].Press()
 
     def getBundleId(self):
         """Return the bundle ID of the application."""
