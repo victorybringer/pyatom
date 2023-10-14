@@ -5,10 +5,15 @@ import Cocoa
 from CoreFoundation import *
 from ApplicationServices import *
 from PyObjCTools import AppHelper, MachSignals
+from retrying import retry
+
 
 """
 Library of Apple A11y functions
 """
+
+
+
 def _CFAttributeToPyObject(self, attrValue):
     def list_helper(list_value):
         list_builder = []
@@ -163,6 +168,7 @@ class AXUIElement(object):
         # if timeout
         # return False
 
+    @retry(stop_max_attempt_number=10)
     def _getAttributes(self):
         """
         Get a list of the actions available on the AXUIElement
@@ -199,7 +205,9 @@ class AXUIElement(object):
 
         # if err != kAXErrorSuccess:
         #     _setError(err, 'Error performing requested action')
+    
 
+    @retry(stop_max_attempt_number=10)
     def _getAttribute(self, attr):
         """
         Get the value of the the specified attribute
