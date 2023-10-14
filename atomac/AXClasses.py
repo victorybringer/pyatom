@@ -28,6 +28,18 @@ from . import _a11y
 from . import AXKeyboard
 from . import AXCallbacks
 from . import AXKeyCodeConstants
+from retrying import retry
+
+
+
+def retry_if_specific_error_message(exception):
+    print(exception.output.decode("utf-8").strip())
+    """Return True if we should retry (in this case when a specific error message is found), False otherwise"""
+    return True
+
+
+
+
 
 
 class BaseAXUIElement(_a11y.AXUIElement):
@@ -729,14 +741,14 @@ class BaseAXUIElement(_a11y.AXUIElement):
         for needle in self._generateChildrenR():
             if needle._match(**kwargs):
                 yield needle
-
+    
     def _findAll(self, **kwargs):
         """Return a list of all children that match the specified criteria."""
         result = []
         for item in self._generateFind(**kwargs):
             result.append(item)
         return result
-
+    
     def _findAllR(self, **kwargs):
         """Return a list of all children (recursively) that match the specified
         criteria.
@@ -745,12 +757,12 @@ class BaseAXUIElement(_a11y.AXUIElement):
         for item in self._generateFindR(**kwargs):
             result.append(item)
         return result
-
+    
     def _findFirst(self, **kwargs):
         """Return the first object that matches the criteria."""
         for item in self._generateFind(**kwargs):
             return item
-
+    
     def _findFirstR(self, **kwargs):
         """Search recursively for the first object that matches the criteria."""
         for item in self._generateFindR(**kwargs):
@@ -771,6 +783,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
                 break
         return app
 
+    
     def _menuItem(self, menuitem, *args):
         """Return the specified menu item.
 
@@ -907,21 +920,24 @@ class NativeUIElement(BaseAXUIElement):
     def setString(self, attribute, string):
         """Set the specified attribute to the specified string."""
         return self._setString(attribute, string)
-
+    
+    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
     def findFirst(self, **kwargs):
         """Return the first object that matches the criteria."""
         return self._findFirst(**kwargs)
 
+    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
     def findFirstR(self, **kwargs):
         """Search recursively for the first object that matches the
         criteria.
         """
         return self._findFirstR(**kwargs)
-
+    
+    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
     def findAll(self, **kwargs):
         """Return a list of all children that match the specified criteria."""
         return self._findAll(**kwargs)
-
+    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
     def findAllR(self, **kwargs):
         """Return a list of all children (recursively) that match
         the specified criteria.
@@ -947,7 +963,8 @@ class NativeUIElement(BaseAXUIElement):
         element.
         """
         return self._getApplication()
-
+    
+    @retry(retry_on_exception=retry_if_specific_error_message, stop_max_attempt_number=5, wait_fixed=1)
     def menuItem(self, *args):
         """Return the specified menu item.
 
@@ -1275,7 +1292,8 @@ class NativeUIElement(BaseAXUIElement):
         if match:
             kwargs[attr] = match
         return self.findAllR(AXRole=role, **kwargs)
-
+    
+    
     def textAreas(self, match=None):
         """Return a list of text areas with an optional match parameter."""
         return self._convenienceMatch('AXTextArea', 'AXTitle', match)
