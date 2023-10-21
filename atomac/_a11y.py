@@ -204,7 +204,7 @@ class AXUIElement(object):
         """
         err = AXUIElementPerformAction(self.ref, action)
 
-        if err != kAXErrorSuccess:
+        if err != kAXErrorSuccess and err != kAXErrorCannotComplete:
             _setError(err, 'Error performing requested action')
     
 
