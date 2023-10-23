@@ -990,17 +990,22 @@ class NativeUIElement(BaseAXUIElement):
     def popUpMenuItem(self, num):
         """Return the specified item in a pop up menu."""
 
-        self.Press()
-        time.sleep(1)
         menu = None
         times = 20
         while times >= 0:
-            menu = self.findFirst(AXRole = "AXMenu")
+            self.Press()
+            times_2 = 20
+            while times_2 >= 0:
+                menu = self.findFirst(AXRole = "AXMenu")
+                if(menu):
+                    break
+                time.sleep(1)
+                times_2 -=1
             if(menu):
-                break
+                break    
             time.sleep(1)
             times -=1
-            
+
         times = 20
         item = None
         while times >= 0:
