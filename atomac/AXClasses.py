@@ -989,13 +989,21 @@ class NativeUIElement(BaseAXUIElement):
     @retry(stop_max_attempt_number=10) 
     def popUpMenuItem(self, num):
         """Return the specified item in a pop up menu."""
+
         self.Press()
         time.sleep(1)
-        menu = self.findFirst(AXRole = "AXMenu")
-        time.sleep(1)
-        times = 10
+        menu = None
+        times = 20
+        while times >= 0:
+            menu = self.findFirst(AXRole = "AXMenu")
+            if(menu):
+                break
+            time.sleep(1)
+            times -=1
+            
+        times = 20
         item = None
-        while times >= 10:
+        while times >= 0:
           item = menu.findAll(AXRole = "AXMenuItem")[num]
           if (item):
             break
