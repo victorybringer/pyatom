@@ -916,23 +916,23 @@ class NativeUIElement(BaseAXUIElement):
         """Set the specified attribute to the specified string."""
         return self._setString(attribute, string)
     
-    
+    @retry(stop_max_attempt_number=10) 
     def findFirst(self, **kwargs):
         """Return the first object that matches the criteria."""
         return self._findFirst(**kwargs)
 
-    
+    @retry(stop_max_attempt_number=10) 
     def findFirstR(self, **kwargs):
         """Search recursively for the first object that matches the
         criteria.
         """
         return self._findFirstR(**kwargs)
     
-    
+    @retry(stop_max_attempt_number=10) 
     def findAll(self, **kwargs):
         """Return a list of all children that match the specified criteria."""
         return self._findAll(**kwargs)
-    
+    @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
         """Return a list of all children (recursively) that match
         the specified criteria.
@@ -1319,52 +1319,52 @@ class NativeUIElement(BaseAXUIElement):
             kwargs[attr] = match
         return self.findAllR(AXRole=role, **kwargs)
     
-    
+    @retry(stop_max_attempt_number=10) 
     def textAreas(self, match=None):
         """Return a list of text areas with an optional match parameter."""
         return self._convenienceMatch('AXTextArea', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def textAreasR(self, match=None):
         """Return a list of text areas with an optional match parameter."""
         return self._convenienceMatchR('AXTextArea', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def textFields(self, match=None):
         """Return a list of textfields with an optional match parameter."""
         return self._convenienceMatch('AXTextField', 'AXRoleDescription', match)
-
+    @retry(stop_max_attempt_number=10) 
     def textFieldsR(self, match=None):
         """Return a list of textfields with an optional match parameter."""
         return self._convenienceMatchR('AXTextField', 'AXRoleDescription',
                                        match)
-
+    @retry(stop_max_attempt_number=10) 
     def buttons(self, match=None):
         """Return a list of buttons with an optional match parameter."""
         return self._convenienceMatch('AXButton', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def buttonsR(self, match=None):
         """Return a list of buttons with an optional match parameter."""
         return self._convenienceMatchR('AXButton', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def windows(self, match=None):
         """Return a list of windows with an optional match parameter."""
         return self._convenienceMatch('AXWindow', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def windowsR(self, match=None):
         """Return a list of windows with an optional match parameter."""
         return self._convenienceMatchR('AXWindow', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def sheets(self, match=None):
         """Return a list of sheets with an optional match parameter."""
         return self._convenienceMatch('AXSheet', 'AXDescription', match)
-
+    @retry(stop_max_attempt_number=10) 
     def sheetsR(self, match=None):
         """Return a list of sheets with an optional match parameter."""
         return self._convenienceMatchR('AXSheet', 'AXDescription', match)
-
+    @retry(stop_max_attempt_number=10) 
     def staticTexts(self, match=None):
         """Return a list of statictexts with an optional match parameter."""
         return self._convenienceMatch('AXStaticText', 'AXValue', match)
-
+    @retry(stop_max_attempt_number=10) 
     def staticTextsR(self, match=None):
         """Return a list of statictexts with an optional match parameter"""
         return self._convenienceMatchR('AXStaticText', 'AXValue', match)
@@ -1376,15 +1376,15 @@ class NativeUIElement(BaseAXUIElement):
     def genericElementsR(self, match=None):
         """Return a list of genericelements with an optional match parameter."""
         return self._convenienceMatchR('AXGenericElement', 'AXValue', match)
-
+    @retry(stop_max_attempt_number=10) 
     def groups(self, match=None):
         """Return a list of groups with an optional match parameter."""
         return self._convenienceMatch('AXGroup', 'AXRoleDescription', match)
-
+    @retry(stop_max_attempt_number=10) 
     def groupsR(self, match=None):
         """Return a list of groups with an optional match parameter."""
         return self._convenienceMatchR('AXGroup', 'AXRoleDescription', match)
-
+   
     def radioButtons(self, match=None):
         """Return a list of radio buttons with an optional match parameter."""
         return self._convenienceMatch('AXRadioButton', 'AXTitle', match)
@@ -1392,11 +1392,11 @@ class NativeUIElement(BaseAXUIElement):
     def radioButtonsR(self, match=None):
         """Return a list of radio buttons with an optional match parameter."""
         return self._convenienceMatchR('AXRadioButton', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10) 
     def popUpButtons(self, match=None):
         """Return a list of popup menus with an optional match parameter."""
         return self._convenienceMatch('AXPopUpButton', 'AXTitle', match)
-
+    @retry(stop_max_attempt_number=10)  
     def popUpButtonsR(self, match=None):
         """Return a list of popup menus with an optional match parameter."""
         return self._convenienceMatchR('AXPopUpButton', 'AXTitle', match)
