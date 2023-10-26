@@ -74,6 +74,8 @@ def _setError(error_code, error_message):
         kAXErrorInvalidUIElement: ErrorInvalidUIElement, # -25202
         kAXErrorCannotComplete: ErrorCannotComplete, # -25204
         kAXErrorNotImplemented: ErrorNotImplemented, # -25208
+        -25200:ErrorRetriving,# -25200
+                                
     }
     msg = '{} (AX Error {})'.format(error_message, error_code)
 
@@ -95,6 +97,12 @@ class ErrorUnsupported(Error):
     pass
 
 class ErrorNotImplemented(Error):
+    pass
+
+class ErrorNotImplemented(Error):
+    pass
+
+class ErrorRetriving(Error):
     pass
 
 class AXUIElement(object):
