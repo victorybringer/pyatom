@@ -82,7 +82,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
             if len(apps) == 0:
                 time.sleep(1)
                 retry_times-=1
-                log.info(('Specified bundle ID not found in '
+                log.debug(('Specified bundle ID not found in '
                                 'running apps: %s' % bundleId))
             else:
                 pid = apps[0].processIdentifier()
@@ -178,7 +178,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
                 if not r[0]:
                     retry_times -=1
                     time.sleep(1)
-                    log.info(f"Error during launch app, remaining retry time {retry_times}")
+                    log.debug(f"Error during launch app, remaining retry time {retry_times}")
                 else:
                     break
     @staticmethod
@@ -923,7 +923,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.info(f"findFirst {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.debug(f"findFirst {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirst(**kwargs)
 
     @retry(stop_max_attempt_number=10) 
@@ -934,7 +934,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.info(f"findFirstR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.debug(f"findFirstR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
@@ -943,7 +943,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.info(f"findAll {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.debug(f"findAll {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
@@ -953,7 +953,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.info(f"findAllR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.debug(f"findAllR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
