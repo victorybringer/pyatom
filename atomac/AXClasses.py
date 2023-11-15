@@ -920,6 +920,10 @@ class NativeUIElement(BaseAXUIElement):
     @retry(stop_max_attempt_number=10) 
     def findFirst(self, **kwargs):
         """Return the first object that matches the criteria."""
+        import inspect
+        stack = inspect.stack()
+        kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
+        log.info(f"findFirst {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirst(**kwargs)
 
     @retry(stop_max_attempt_number=10) 
@@ -929,7 +933,8 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        log.info(f"findFirstR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
+        log.info(f"findFirstR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
@@ -937,7 +942,8 @@ class NativeUIElement(BaseAXUIElement):
         """Return a list of all children that match the specified criteria."""
         import inspect
         stack = inspect.stack()
-        log.info(f"findAll called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
+        log.info(f"findAll {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
@@ -946,7 +952,8 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        log.info(f"findAllR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
+        log.info(f"findAllR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
