@@ -936,7 +936,7 @@ class NativeUIElement(BaseAXUIElement):
         """Return a list of all children that match the specified criteria."""
         import inspect
         stack = inspect.stack()
-        print(f"findAll called by'{stack[2].function}' in file '{stack[2].filename}' at line {stack[2].lineno}")
+        print(f"findAll called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
@@ -945,7 +945,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        print(f"findAllR called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
+        print(f"findAllR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
@@ -999,11 +999,12 @@ class NativeUIElement(BaseAXUIElement):
     def popUpMenuItem(self, num):
         """Return the specified item in a pop up menu."""
 
+
         menu = None
-        times = 20
+        times = 5
         while times >= 0:
             self.Press()
-            times_2 = 20
+            times_2 = 5
             while times_2 >= 0:
                 menu = self.findFirst(AXRole = "AXMenu")
                 if(menu):
@@ -1014,8 +1015,8 @@ class NativeUIElement(BaseAXUIElement):
                 break    
             time.sleep(1)
             times -=1
-
-        times = 20
+        assert menu is not None
+        times = 5
         item = None
         while times >= 0:
           item = menu.findAll(AXRole = "AXMenuItem")[num]
@@ -1023,6 +1024,7 @@ class NativeUIElement(BaseAXUIElement):
             break
           times -=1
           time.sleep(1)
+        assert item is not None  
         item.Press()
 
     def getBundleId(self):
