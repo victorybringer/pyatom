@@ -923,7 +923,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.debug(f"findFirst {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+       
         return self._findFirst(**kwargs)
 
     @retry(stop_max_attempt_number=10) 
@@ -934,7 +934,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.debug(f"findFirstR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
@@ -943,7 +943,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.debug(f"findAll {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
@@ -953,7 +953,7 @@ class NativeUIElement(BaseAXUIElement):
         import inspect
         stack = inspect.stack()
         kv = ', '.join('{}={}'.format(k, v) for k, v in kwargs.items())
-        log.debug(f"findAllR {kv} called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+       
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
