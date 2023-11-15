@@ -926,17 +926,26 @@ class NativeUIElement(BaseAXUIElement):
         """Search recursively for the first object that matches the
         criteria.
         """
+        import inspect
+        stack = inspect.stack()
+        print(f"findFirstR called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
     def findAll(self, **kwargs):
         """Return a list of all children that match the specified criteria."""
+        import inspect
+        stack = inspect.stack()
+        print(f"findAll called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
         """Return a list of all children (recursively) that match
         the specified criteria.
         """
+        import inspect
+        stack = inspect.stack()
+        print(f"findAllR called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
