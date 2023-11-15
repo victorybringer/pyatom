@@ -928,8 +928,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        print(stack)
-
+        print(f"findFirstR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
