@@ -928,7 +928,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        print(f"findFirstR called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
+        print(f"findFirstR called by'{stack[2].function}' in file '{stack[2].filename}' at line {stack[2].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
@@ -936,7 +936,7 @@ class NativeUIElement(BaseAXUIElement):
         """Return a list of all children that match the specified criteria."""
         import inspect
         stack = inspect.stack()
-        print(f"findAll called by'{stack[1].function}' in file '{stack[1].filename}' at line {stack[1].lineno}")
+        print(f"findAll called by'{stack[2].function}' in file '{stack[2].filename}' at line {stack[2].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
