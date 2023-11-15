@@ -25,6 +25,7 @@ from AppKit import NSURL, NSString, NSDictionary, NSArray
 from PyObjCTools import AppHelper
 
 from . import _a11y
+from .Log import log
 from . import AXKeyboard
 from . import AXCallbacks
 from . import AXKeyCodeConstants
@@ -81,7 +82,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
             if len(apps) == 0:
                 time.sleep(1)
                 retry_times-=1
-                print(('Specified bundle ID not found in '
+                log.info(('Specified bundle ID not found in '
                                 'running apps: %s' % bundleId))
             else:
                 pid = apps[0].processIdentifier()
@@ -177,7 +178,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
                 if not r[0]:
                     retry_times -=1
                     time.sleep(1)
-                    print(f"Error during launch app, remaining retry time {retry_times}")
+                    log.info(f"Error during launch app, remaining retry time {retry_times}")
                 else:
                     break
     @staticmethod
@@ -928,7 +929,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        print(f"findFirstR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.info(f"findFirstR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findFirstR(**kwargs)
     
     @retry(stop_max_attempt_number=10) 
@@ -936,7 +937,7 @@ class NativeUIElement(BaseAXUIElement):
         """Return a list of all children that match the specified criteria."""
         import inspect
         stack = inspect.stack()
-        print(f"findAll called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.info(f"findAll called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAll(**kwargs)
     @retry(stop_max_attempt_number=10) 
     def findAllR(self, **kwargs):
@@ -945,7 +946,7 @@ class NativeUIElement(BaseAXUIElement):
         """
         import inspect
         stack = inspect.stack()
-        print(f"findAllR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
+        log.info(f"findAllR called by'{stack[3].function}' in file '{stack[3].filename}' at line {stack[3].lineno}")
         return self._findAllR(**kwargs)
 
     def getElementAtPosition(self, coord):
