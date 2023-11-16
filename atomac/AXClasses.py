@@ -25,7 +25,7 @@ from AppKit import NSURL, NSString, NSDictionary, NSArray
 from PyObjCTools import AppHelper
 
 from . import _a11y
-from .Log import log
+
 from . import AXKeyboard
 from . import AXCallbacks
 from . import AXKeyCodeConstants
@@ -82,7 +82,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
             if len(apps) == 0:
                 time.sleep(1)
                 retry_times-=1
-                log.debug(('Specified bundle ID not found in '
+                print(('Specified bundle ID not found in '
                                 'running apps: %s' % bundleId))
             else:
                 pid = apps[0].processIdentifier()
@@ -178,7 +178,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
                 if not r[0]:
                     retry_times -=1
                     time.sleep(1)
-                    log.debug(f"Error during launch app, remaining retry time {retry_times}")
+                    print(f"Error during launch app, remaining retry time {retry_times}")
                 else:
                     break
     @staticmethod
