@@ -203,7 +203,7 @@ class AXUIElement(object):
         else:
             return list(actions)
 
-    
+    @retry(stop_max_attempt_number=10)
     def _performAction(self, action):
         """
         Perform the specified action on the AXUIElement object
@@ -212,7 +212,7 @@ class AXUIElement(object):
         """
         err = AXUIElementPerformAction(self.ref, action)
 
-        if err != kAXErrorSuccess and err != kAXErrorCannotComplete and err != kAXErrorAttributeUnsupported :
+        if err != kAXErrorSuccess and err != kAXErrorCannotComplete :
             _setError(err, 'Error performing requested action')
     
 
