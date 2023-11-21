@@ -75,7 +75,7 @@ def _setError(error_code, error_message):
         kAXErrorCannotComplete: ErrorCannotComplete, # -25204
         kAXErrorNotImplemented: ErrorNotImplemented, # -25208
         -25200:ErrorRetriving,# -25200
-        -25202:ErrorRetriving,# -25202                        
+        -25202:ErrorRetriving,# -25202                   
     }
     msg = '{} (AX Error {})'.format(error_message, error_code)
 
@@ -212,7 +212,7 @@ class AXUIElement(object):
         """
         err = AXUIElementPerformAction(self.ref, action)
 
-        if err != kAXErrorSuccess and err != kAXErrorCannotComplete:
+        if err != kAXErrorSuccess and err != kAXErrorCannotComplete and err != kAXErrorAttributeUnsupported :
             _setError(err, 'Error performing requested action')
     
 
