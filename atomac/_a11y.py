@@ -216,7 +216,7 @@ class AXUIElement(object):
             _setError(err, 'Error performing requested action')
     
 
-    
+    @retry(stop_max_attempt_number=10)
     def _getAttribute(self, attr):
         """
         Get the value of the the specified attribute
@@ -234,7 +234,8 @@ class AXUIElement(object):
                 _setError(err, 'Error retrieving attribute')
 
         return _CFAttributeToPyObject(self, attrValue)
-
+    
+    @retry(stop_max_attempt_number=10)
     def _setAttribute(self, attr, val):
         """
         Set the specified attribute to the specified value
