@@ -176,7 +176,7 @@ class AXUIElement(object):
         # if timeout
         # return False
 
-    @retry(stop_max_attempt_number=10)
+    
     def _getAttributes(self):
         """
         Get a list of the actions available on the AXUIElement
@@ -216,7 +216,7 @@ class AXUIElement(object):
             _setError(err, 'Error performing requested action')
     
 
-    @retry(stop_max_attempt_number=10)
+    
     def _getAttribute(self, attr):
         """
         Get the value of the the specified attribute
