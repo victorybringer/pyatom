@@ -82,8 +82,7 @@ class BaseAXUIElement(_a11y.AXUIElement):
             if len(apps) == 0:
                 time.sleep(1)
                 retry_times-=1
-                print(('Specified bundle ID not found in '
-                                'running apps: %s' % bundleId))
+                
             else:
                 pid = apps[0].processIdentifier()
                 return cls.getAppRefByPid(pid)
